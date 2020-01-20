@@ -1,0 +1,25 @@
+.navbar {
+    height: 60px;
+    box-shadow: 0 -8px 12px 0 var(--color-principal),
+    0 -8px 12px 0 var(--color-secundario);
+}
+.navbar-collapse {
+    z-index: var(--z-fixed);
+}
+.brand {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.brand-img {
+    position: relative;
+    top: -4px;
+    width: 40px;
+}
+.brand-text {
+    font-size: 24px;
+    text-transform: capitalize;
+    font-family: var(--display) !important;
+    font-weight: 400;
+    color: var(--color-principal);
+}

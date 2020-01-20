@@ -1,0 +1,23 @@
+
+.pago-precio {
+    color: var(--color-principal);
+    font-size: calc(var(--h2-size) + .5rem);
+}
+.pago-precio::before {
+    content: 'S/ ';
+}
+.paypal {
+    background-color: var(--first);
+    padding: .5rem 1rem;
+}
+
+.btn-pago {
+    background-color: #f8e63e;
+    color: var(--negro);
+    font-weight: 500;
+    border: 1px solid #041662;
+}
+.btn-pago:hover {
+    background-color: #11f;
+    color: var(--blanco);
+}

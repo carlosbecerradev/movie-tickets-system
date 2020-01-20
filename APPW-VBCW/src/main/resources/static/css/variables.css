@@ -1,0 +1,113 @@
+:root {
+    /* Fuentes */
+    --display: 'Poppins', sans-serif;
+    --sans: 'Roboto', sans-serif;
+    
+    /* --gris: #7a7a7a; */
+    --color-principal: #06b9e3;/*06b9e3*/
+    --color-auxiliar: #62d5f0;/*62d5f0*/
+    --color-secundario: #474747;/*474747*/
+    --color-blanco: #fff;/*fff*/
+    --color-gris: #f7f6fa;/*f7f6fa*/
+
+    /* Encabezados*/
+    --h1-size: 48px;
+    --h2-size: 30px;
+    --h3-size: 24px;
+    --text-body: 16px;
+
+    /*z-index;*/
+    --z-fixed: 1000;
+}
+/* Utils */
+/*anclas*/
+.link-text:hover {
+    color: var(--color-secundario);
+}
+/*btn*/
+.btn-principal {
+    background: linear-gradient(45deg, var(--color-auxiliar), var(--color-principal));
+    color: var(--color-blanco) !important;
+    font-weight: 500;
+}
+.btn-principal:hover {
+    background: linear-gradient(0deg, var(--color-principal), var(--color-principal));
+}
+.btn-inverso {
+    background-color: var(--color-blanco);
+    color: var(--color-principal) !important;
+    border: 1px solid var(--color-principal);
+}
+.btn-inverso:hover {
+    background: linear-gradient(45deg, var(--color-auxiliar), var(--color-principal));
+    color: var(--color-blanco) !important;
+}
+.btn-cancel {
+    border: 1px solid var(--color-secundario);
+    color: var(--color-secundario);
+}
+.btn-cancel:hover {
+    background-color: var(--color-secundario);
+    color: var(--color-blanco);
+}
+/*bg*/
+.bg-principal {
+    background-color: var(--color-principal);
+    color: var(--color-blanco) !important;
+}
+.bg-auxiliar {
+    background-color: var(--color-auxiliar);
+}
+.bg-blanco {
+    background-color: var(--color-blanco);
+}
+.bg-blanco-border {
+    background-color: var(--color-blanco);
+    border: 2px solid var(--color-gris);
+    border-left: 8px solid var(--color-principal);
+}
+.bg-gris {
+    border: 4px solid var(--color-gris);
+}
+/**************************/
+.text-principal {
+    color: var(--color-principal) !important;
+}
+.nav-link.active {
+    color: var(--color-principal) !important;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-size: var(-text-body);
+    font-family: var(--sans);
+}
+img {
+    object-fit: contain;
+    object-position: top;
+}
+p {
+    margin-bottom: .2rem;
+}
+b {
+    margin-right: .5rem;
+}
+a,a:hover {
+    color: var(--color-principal);
+    text-decoration: none;
+}
+hr {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+th {
+    font-weight: 500;
+}
+.text {
+    color: var(--text);
+    font-size: var(--text-body);
+    font-family: var(--sans);
+}.proyeccion-img img {
+    max-width: 400px;    
+}
