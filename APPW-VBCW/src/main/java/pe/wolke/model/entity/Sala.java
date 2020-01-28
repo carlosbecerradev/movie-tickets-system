@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,12 +16,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Sala implements Serializable{
     
     @Id
-    @GeneratedValue()
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
     @NotEmpty
-    @Column(nullable = false, unique = true, columnDefinition = "char(8)")
+    @Column(nullable = false, length = 8, unique = true, columnDefinition = "char(8)")
     private String nombre;    
+    
+    @NotNull
+    @Column(nullable = false, columnDefinition = "bit default 1")
+    private Boolean estado;  
     
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -58,6 +63,14 @@ public class Sala implements Serializable{
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Boolean getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
 	}
 
 	public Date getCreated_at() {

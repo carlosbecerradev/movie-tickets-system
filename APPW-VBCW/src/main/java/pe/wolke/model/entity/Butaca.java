@@ -1,10 +1,13 @@
 package pe.wolke.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,10 +18,18 @@ public class Butaca implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false)
+    
+    @NotNull
+    @Column(nullable = false, columnDefinition = "char(1)")
     private Character fila;
+    
+    @NotEmpty
     @Column(nullable = false, columnDefinition = "char(2)")
     private String columna;
+    
+    @NotNull
+    @Column(nullable = false, columnDefinition = "bit default 1")
+    private Boolean estado;  
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -32,9 +43,10 @@ public class Butaca implements Serializable{
     
     /* Union BUTACA TO RESERVA_BUTACA*/
     @OneToMany(mappedBy = "butaca")
-    private Set<ReservaButaca> itemsReservaButaca = new HashSet<ReservaButaca>();
+    private Collection<ReservaButaca> itemsReservaButaca = new ArrayList<ReservaButaca>();
     
     /*Union SALA TO BUTACA */
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_sala", nullable = false, foreignKey = @ForeignKey(
     		foreignKeyDefinition = "foreign key (id_sala) references salas(id)"))
@@ -68,6 +80,14 @@ public class Butaca implements Serializable{
 		this.columna = columna;
 	}
 
+	public Boolean getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
+	}
+
 	public Date getCreated_at() {
 		return created_at;
 	}
@@ -83,12 +103,12 @@ public class Butaca implements Serializable{
 	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
 	}
-
-	public Set<ReservaButaca> getItemsReservaButaca() {
+	
+	public Collection<ReservaButaca> getItemsReservaButaca() {
 		return itemsReservaButaca;
 	}
 
-	public void setItemsReservaButaca(Set<ReservaButaca> itemsReservaButaca) {
+	public void setItemsReservaButaca(Collection<ReservaButaca> itemsReservaButaca) {
 		this.itemsReservaButaca = itemsReservaButaca;
 	}
 

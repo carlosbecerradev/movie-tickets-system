@@ -25,7 +25,7 @@
         <div class="container h-100 d-flex justify-content-between align-items-center">
             <a class="navbar-brand" href='<c:url value="/cartelera" />'>
                 <div class="brand">
-                    <img class="brand-img" src="<c:url value='img/cine-wolke.svg' /> " alt="">
+                    <img class="brand-img" src="img/cine-wolke.svg" alt="">
                     <span class="brand-text ml-2">cine wolke</span>
                 </div>
             </a>
@@ -41,7 +41,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/gestion_proyecciones" />">Proyecciones</a>
                     </li>
-                    <a class="nav-link btn-inverso rounded ml-md-4" href="#">Cerrar Sesión</a>
+                    <a class="nav-link btn-inverso rounded ml-md-4" href='<c:url value="/logout"/>'>
+	                    	Cerrar Sesión
+	                    </a>
                 </ul>
             </div>
         </div>
@@ -83,14 +85,14 @@
                             
                             <div class="col-md-6 mb-3">
                                 <label>Título</label>
-                                <form:input type="text" class="form-control" path="titulo"
-                                    placeholder="Título de la película" />
+                                <form:input type="text" class="form-control" path="titulo" maxlength="30" 
+                                    placeholder="Título de la película"  />
                                 <form:errors path="titulo" cssClass="form-text text-danger" />
                             </div>
                             
                             <div class="col-md-6 mb-3">
                                 <label>Descripción</label>
-                                <form:textarea class="form-control" path="descripcion"
+                                <form:textarea class="form-control" path="descripcion" maxlength="1024" 
                                  placeholder="Breve Sinopsis"  />
                                 <form:errors path="descripcion" cssClass="form-text text-danger" />
                             </div>
@@ -118,16 +120,13 @@
                                 <label>Género</label>
                                 <form:select class="custom-select" path="genero" >
                                     <form:option value="">Selecciona una opción</form:option>
-									<form:option value="Acción">Acción</form:option>
-									<form:option value="Comedia">Comedia</form:option>
-									<form:option value="Terror">Terror</form:option>
-									<form:option value="Ciencia Ficción">Ciencia Ficción</form:option>
+									<form:options items="${Generos}" itemLabel="nombre" itemValue="id" />
                                 </form:select>
                                 <form:errors path="genero" cssClass="form-text text-danger" />
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label >Duración en minutos</label>
-                                <form:input type="number" class="form-control" path="duracion" min="15" max="999" 
+                                <form:input type="number" class="form-control" path="duracion" min="0" max="200" maxlength="3"
                                     placeholder="000"  />
                                 <form:errors path="duracion" cssClass="form-text text-danger" />
                             </div>
@@ -176,7 +175,7 @@
 	                        			<img src="${card.imagenUri}" width="100px" />
 	                        		</td>
 	                        		<td>${card.censura}</td>
-	                        		<td>${card.genero}</td>
+	                        		<td>${card.genero.nombre}</td>
 	                        		<td>${card.duracion} min</td>
 	                        		<td>
 		                        		<c:if test="${card.estado}">

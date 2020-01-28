@@ -26,7 +26,7 @@ rel="stylesheet">
         <div class="container h-100 d-flex justify-content-between align-items-center">
             <a class="navbar-brand" href='<c:url value="/cartelera" />'>
                 <div class="brand">
-                    <img class="brand-img" src="cine-wolke.svg" alt="">
+                    <img class="brand-img" src="img/cine-wolke.svg" alt="">
                     <span class="brand-text ml-2">cine wolke</span>
                 </div>
             </a>
@@ -48,7 +48,9 @@ rel="stylesheet">
                     <li class="nav-item ">
                         <a class="nav-link active" href='<c:url value="/gestion_butacas" />'>Butacas</a>
                     </li>
-                    <a class="nav-link btn-inverso rounded ml-md-4" href="#">Cerrar Sesión</a>
+                    <a class="nav-link btn-inverso rounded ml-md-4" href='<c:url value="/logout"/>'>
+	                    	Cerrar Sesión
+	                    </a>
                 </ul>
             </div>
         </div>
@@ -94,15 +96,32 @@ rel="stylesheet">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label>Fila</label>
-                                <form:input path="fila" type="text" class="form-control" placeholder="A-Z" />
+                                <form:select path="fila" class="custom-select" >
+                                	<c:forEach items="${lstFilas}" var="card">
+                                		<form:option value="${card}">${card}</form:option>
+                                	</c:forEach>                                	
+                                </form:select>
                                 <form:errors path="fila" cssClass="form-text text-danger" />
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label>Columna</label>
-                                <form:input path="columna" type="text" class="form-control" placeholder="1-99" />                                
+                                <form:select path="columna" class="custom-select" >
+                                	<c:forEach items="${lstColumnas}" var="card">
+                                		<form:option value="${card}">${card}</form:option>
+                                	</c:forEach>                                	
+                                </form:select>                         
                                 <form:errors path="columna" cssClass="form-text text-danger" />
                             </div>
-                            <div class="col-md-6 offset-6">
+                            <div class="col-md-6 mb-3">
+                                <label>Estado</label>
+                                <form:select class="custom-select" path="estado" >
+									<form:option value="1">Disponible</form:option>
+									<form:option value="0">No Disponible</form:option>
+                                </form:select>
+                                <form:errors path="estado" cssClass="form-text text-danger" />
+                            </div>
+                            <div class="col-md-6 offset-6 offset-md-0">
+                            	<label class="d-none d-md-block">&nbsp;</label>
                                 <button class="btn btn-principal btn-block" type="submit">Guardar</button>
                             </div>
                         </div>
@@ -121,21 +140,30 @@ rel="stylesheet">
                                 <th>Sala</th>
                                 <th>Fila</th>
                                 <th>Columna</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${Butacas}" var="but">
+                        <c:forEach items="${Butacas}" var="card">
                             <tr>
-                                <td>${but.id}</td>
-                                <td>${but.sala.nombre}</td>
-                                <td>${but.fila}</td>
-                                <td>${but.columna}</td>
+                                <td>${card.id}</td>
+                                <td>${card.sala.nombre}</td>
+                                <td>${card.fila}</td>
+                                <td>${card.columna}</td>
                                 <td>
-	                        			<a class="link-text" href='<c:url value="/gestion_butacas?id=${but.id}" />'>Editar </a>
-	                        			<span class="px-2 px-md-3">|</span>
-										<a class="link-text" href='<c:url value="/eliminar_butaca/${but.id}"/>' onclick="return confirm('¿Estás seguro de eliminar?')" >Eliminar</a>
-	                        		</td>
+		                        	<c:if test="${card.estado}">
+		                        		Disponible
+		                        	</c:if>
+		                        	<c:if test="${!card.estado}">
+		                        		No Disponible
+		                        	</c:if>	                        		
+	                        	</td>
+                                <td>
+	                        		<a class="link-text" href='<c:url value="/gestion_butacas?id=${card.id}" />'>Editar </a>
+	                        		<span class="px-2 px-md-3">|</span>
+									<a class="link-text" href='<c:url value="/eliminar_butaca/${card.id}"/>' onclick="return confirm('¿Estás seguro de eliminar?')" >Eliminar</a>
+	                        	</td>
                             </tr>
 						</c:forEach>
                         </tbody>

@@ -1,6 +1,7 @@
 package pe.wolke.model.service;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,13 @@ public class BoletoServiceImpl implements IBoletoService {
 	@Transactional(readOnly = true)
 	public boolean isExist(Integer id_boleto) {
 		return boletoDao.existsById(id_boleto);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<Boleto> findByFecha(Date fecha) {
+		// TODO Auto-generated method stub
+		return boletoDao.findByFecha(fecha);
 	}
 
 }

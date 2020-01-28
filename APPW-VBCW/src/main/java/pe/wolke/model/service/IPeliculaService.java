@@ -5,6 +5,7 @@ import java.util.Collection;
 import pe.wolke.model.entity.Pelicula;;
 
 public interface IPeliculaService {
+	
 	public abstract void insert(Pelicula pelicula);
 	public abstract void update(Pelicula pelicula);
 	public abstract void delete(Integer id_pelicula);

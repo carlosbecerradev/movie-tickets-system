@@ -1,6 +1,8 @@
 package pe.wolke.model.service;
 
 import java.util.Collection;
+import java.util.Date;
+
 import pe.wolke.model.entity.Boleto;
 
 public interface IBoletoService {
@@ -12,5 +14,7 @@ public interface IBoletoService {
 	public abstract Boleto findById(Integer id_boleto);
 	public abstract Collection<Boleto> findAll();
 	public abstract boolean isExist(Integer id_boleto);
+	
+	public abstract Collection<Boleto> findByFecha(Date fecha);
 	
 }

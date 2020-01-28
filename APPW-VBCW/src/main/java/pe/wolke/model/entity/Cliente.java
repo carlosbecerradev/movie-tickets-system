@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,12 +19,21 @@ public class Cliente implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @NotEmpty
     @Column(nullable = false, length = 50)
     private String nombres;
+    
+    @NotEmpty
     @Column(nullable = false, length = 50)
     private String apellidos;
+    
+    @NotEmpty
     @Column(nullable = false, length = 8, columnDefinition = "char(8)")
     private String dni;
+    
+    @Email
+    @NotNull
     @Column(nullable = false, length = 60)
     private String correo;
     

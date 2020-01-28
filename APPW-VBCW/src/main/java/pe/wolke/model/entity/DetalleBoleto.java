@@ -2,20 +2,31 @@ package pe.wolke.model.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "detalle_boleto")
 public class DetalleBoleto implements Serializable {
-    @Id
+	
+	@Id
+   	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "id_tarifa")
     private Tarifa tarifa;
-    @Id
+
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "id_boleto")
     private Boleto boleto;
+    
+    @NotNull
     @Column(nullable = false)
     private Integer cantidad;
+    
+    @NotNull
     @Column(nullable = false, columnDefinition = "decimal(6,2)")
     private Double importe;
  
@@ -54,5 +65,6 @@ public class DetalleBoleto implements Serializable {
 	public void setImporte(Double importe) {
 		this.importe = importe;
 	}
+	
     
 }

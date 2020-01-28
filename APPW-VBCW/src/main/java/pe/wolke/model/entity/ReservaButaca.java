@@ -3,27 +3,35 @@ package pe.wolke.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "reserva_butaca")
 public class ReservaButaca implements Serializable {
-    @Id
+	
+  	@Id
+   	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
     @ManyToOne
     @JoinColumn(name = "id_butaca")
-    private Butaca butaca;
-    @Id
+    @NotNull
+    private Butaca butaca;    
+   
     @ManyToOne
     @JoinColumn(name = "id_proyeccion")
+    @NotNull
     private Proyeccion proyeccion;
-    @Id
+        
     @ManyToOne
     @JoinColumn(name = "id_boleto")
     private Boleto boleto;
     
-    
-    @Column(columnDefinition = "bit", nullable = false)
+    @NotNull
+    @Column(columnDefinition = "bit default 0", nullable = false)
     private boolean estado;
     
     @CreationTimestamp
@@ -38,6 +46,14 @@ public class ReservaButaca implements Serializable {
     
     public ReservaButaca() {
 		// TODO Auto-generated constructor stub
+	}
+    
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Butaca getButaca() {

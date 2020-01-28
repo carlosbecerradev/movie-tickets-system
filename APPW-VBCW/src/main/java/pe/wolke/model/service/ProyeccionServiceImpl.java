@@ -13,22 +13,34 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import pe.wolke.model.dao.ButacaDao;
 import pe.wolke.model.dao.IProyeccionDao;
+import pe.wolke.model.dao.IReservaButacaDao;
+import pe.wolke.model.entity.Butaca;
 import pe.wolke.model.entity.Pelicula;
 import pe.wolke.model.entity.Proyeccion;
+import pe.wolke.model.entity.ReservaButaca;
 
 @Service
 public class ProyeccionServiceImpl implements IProyeccionService {
 
 	@Autowired
 	private IProyeccionDao proyeccionDao;
+
+	@Autowired
+	@Qualifier("reservaButacaDaoImpl")
+	private IReservaButacaDao reservaButacaDao;
 	
+	@Autowired
+	@Qualifier("butacaDaoImpl")
+	private ButacaDao butacaDao;
 	
 	@Override
 	@Transactional(readOnly = false)
 	public void insert(Proyeccion proyeccion) {
 		// TODO Auto-generated method stub
 		proyeccionDao.save(proyeccion);
+		insertReservasButacas(proyeccion);
 	}
 
 	@Override
@@ -109,6 +121,20 @@ public class ProyeccionServiceImpl implements IProyeccionService {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String fechaActual = sdf.format(fecha);
         return fechaActual;
+	}
+
+	@Override
+	public void insertReservasButacas(Proyeccion proyeccion) {
+		// TODO Auto-generated method stub
+		
+		for(Butaca butaca : butacaDao.findAllByIdSala(proyeccion.getSala().getId())) {
+			ReservaButaca reservaButaca = new ReservaButaca();
+			reservaButaca.setProyeccion(proyeccion);
+			reservaButaca.setButaca(butaca);
+			reservaButaca.setEstado(false);
+			reservaButacaDao.insert(reservaButaca);
+		}
+		
 	}
 
 

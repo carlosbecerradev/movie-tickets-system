@@ -1,19 +1,22 @@
 package pe.wolke.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "tarifas")
 public class Tarifa implements Serializable {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,8 +25,8 @@ public class Tarifa implements Serializable {
     @Column(nullable = false, length = 20)
     private String tipo_cliente;
     
-    @NotEmpty
-    @Column(nullable = false, columnDefinition = "char(2)")
+    @NotEmpty    
+    @Column(nullable = false, length = 2, columnDefinition = "char(2)")
     private String calidad;
     
     @NotNull
@@ -41,8 +44,8 @@ public class Tarifa implements Serializable {
     private Date updated_at;
     
     /*Union*/
-    @OneToMany(mappedBy = "tarifa")
-    private Set<DetalleBoleto> itemsDetalleBoleto = new HashSet<DetalleBoleto>();
+    @OneToMany(mappedBy = "tarifa", fetch = FetchType.EAGER)
+    private Collection<DetalleBoleto> itemsDetalleBoleto = new ArrayList<DetalleBoleto>();
     
     public Tarifa() {
 		// TODO Auto-generated constructor stub
@@ -96,11 +99,11 @@ public class Tarifa implements Serializable {
 		this.updated_at = updated_at;
 	}
 
-	public Set<DetalleBoleto> getItemsDetalleBoleto() {
+	public Collection<DetalleBoleto> getItemsDetalleBoleto() {
 		return itemsDetalleBoleto;
 	}
 
-	public void setItemsDetalleBoleto(Set<DetalleBoleto> itemsDetalleBoleto) {
+	public void setItemsDetalleBoleto(Collection<DetalleBoleto> itemsDetalleBoleto) {
 		this.itemsDetalleBoleto = itemsDetalleBoleto;
 	}
     

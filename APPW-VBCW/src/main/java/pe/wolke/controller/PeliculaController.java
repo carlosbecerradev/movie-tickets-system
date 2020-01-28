@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pe.wolke.model.entity.Pelicula;
+import pe.wolke.model.service.IGeneroService;
 import pe.wolke.model.service.IPeliculaService;
 
 @Controller
@@ -32,12 +30,18 @@ public class PeliculaController {
 	@Qualifier("peliculaServiceImpl")
 	private IPeliculaService peliculaService;
 	
+	@Autowired
+	@Qualifier("generoServiceImpl")
+	private IGeneroService generoService;
+	
 	/* Listar */
 	@RequestMapping(value = "/gestion_peliculas", method = RequestMethod.GET)
 	public String listar_crear_peliculas_GET(Model model, @RequestParam(required = false) Integer id,
-											@RequestParam(value="file",required = false) MultipartFile foto) {
-				
+											@RequestParam(value="file",required = false) MultipartFile foto)
+	{				
+		model.addAttribute("Generos", generoService.findAll());
 		model.addAttribute("Peliculas", peliculaService.findAll());
+		
 		Pelicula pelicula = new Pelicula();
 		
 		if (id != null && id > 0) {
@@ -57,6 +61,7 @@ public class PeliculaController {
 											@RequestParam(value="file",required = false) MultipartFile foto, Model model) {
 		
 		if(result.hasErrors()) {
+			model.addAttribute("Generos", generoService.findAll());
 			model.addAttribute("Peliculas", peliculaService.findAll());
 			return "gestion_peliculas";
 		}
@@ -94,11 +99,15 @@ public class PeliculaController {
 	@RequestMapping(value = "/eliminar_pelicula/{id}")
 	public String eliminar_peliculas(@PathVariable(value="id") Integer id_pelicula, RedirectAttributes flash) {
 		
-		if (id_pelicula != null && id_pelicula > 0) {
+		if (id_pelicula != null && id_pelicula > 0 
+				&& peliculaService.findById(id_pelicula).getItemsProyeccion().size() == 0) 
+		{				
 			peliculaService.delete(id_pelicula);
-			flash.addFlashAttribute("success", "Película Eliminada con exito");
-		} else {
-			flash.addFlashAttribute("error", "El id no exite");
+			flash.addFlashAttribute("success", "Película Eliminada con exito");			
+		} 
+		else 
+		{
+			flash.addFlashAttribute("error", "El id no exite o esta pelicula está siendo usada");
 		}
 		
 		return "redirect:/gestion_peliculas";

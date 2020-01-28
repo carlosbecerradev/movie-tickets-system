@@ -24,7 +24,7 @@
         <div class="container h-100 d-flex justify-content-between align-items-center">
             <a class="navbar-brand" href='<c:url value="/cartelera" />'>
                 <div class="brand">
-                    <img class="brand-img" src="<c:url value='img/cine-wolke.svg' /> " alt="">
+                    <img class="brand-img" src="img/cine-wolke.svg" alt="">
                     <span class="brand-text ml-2">cine wolke</span>
                 </div>
             </a>
@@ -40,7 +40,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="<c:url value="/gestion_proyecciones" />">Proyecciones</a>
                     </li>
-                    <a class="nav-link btn-inverso rounded ml-md-4" href="#">Cerrar Sesión</a>
+                   <a class="nav-link btn-inverso rounded ml-md-4" href='<c:url value="/logout"/>'>
+	                    	Cerrar Sesión
+	                    </a>
                 </ul>
             </div>
         </div>
@@ -98,7 +100,7 @@
                                 </form:select>
                                 <form:errors path="sala" cssClass="form-text text-danger" />
                             </div>
-                            
+
                             <div class="col-md-6 mb-3">
                                 <label>Fecha</label>
                                 <form:input type="date" path="fecha" class="form-control" />
@@ -107,7 +109,7 @@
                             
                             <div class="col-md-6 mb-3">
                                 <label>Hora</label>
-                                <form:input type="text" path="hora" class="form-control" placeholder="23:59" />
+                                <form:input type="text" path="hora" class="form-control" placeholder="23:59" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" maxlength="5"  />
                                 <form:errors path="hora" cssClass="form-text text-danger" />
                             </div>
                             

@@ -71,11 +71,16 @@ public class SalaController {
 	@RequestMapping(value = "/eliminar_sala/{id}")
 	public String eliminar_salas(@PathVariable(value="id") Integer id_sala, RedirectAttributes flash) {
 		
-		if (id_sala != null && id_sala > 0) {
+		if (id_sala != null && id_sala > 0 
+				&& salaService.findById(id_sala).getItemsProyeccion().size() == 0 
+				&& salaService.findById(id_sala).getItemsButacas().size() == 0 ) 
+		{
 			salaService.delete(id_sala);
 			flash.addFlashAttribute("success", "Sala Eliminada con exito");
-		} else {
-			flash.addFlashAttribute("error", "El id no exite");
+		} 
+		else
+		{
+			flash.addFlashAttribute("error", "El id no exite o esta sala esta siendo usada.");
 		}
 		
 		return "redirect:/gestion_salas";

@@ -70,11 +70,15 @@ public class TarifaController {
 	@RequestMapping(value = "/eliminar_tarifa/{id}")
 	public String eliminar_tarifas(@PathVariable(value="id") Integer id_tarifa, RedirectAttributes flash) {
 		
-		if (id_tarifa != null && id_tarifa > 0) {
+		if (id_tarifa != null && id_tarifa > 0 
+				&& tarifaService.findById(id_tarifa).getItemsDetalleBoleto().size() == 0 ) 
+		{
 			tarifaService.delete(id_tarifa);
 			flash.addFlashAttribute("success", "Tarifa Eliminada con exito");
-		} else {
-			flash.addFlashAttribute("error", "El id no exite");
+		} 
+		else 
+		{
+			flash.addFlashAttribute("error", "El id no exite o esta tarifa esta siendo usada.");
 		}
 		
 		return "redirect:/gestion_tarifas";

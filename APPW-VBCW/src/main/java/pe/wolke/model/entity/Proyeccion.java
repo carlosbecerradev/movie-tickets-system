@@ -4,14 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -29,15 +28,15 @@ public class Proyeccion implements Serializable {
     private Date fecha;
 
     @NotEmpty
-    @Column(nullable = false,columnDefinition = "char(5)")
+    @Column(nullable = false, length = 5, columnDefinition = "char(5)")
     private String hora;
     
     @NotEmpty
-    @Column(nullable = false, columnDefinition = "char(3)")
+    @Column(nullable = false, length = 3, columnDefinition = "char(3)")
     private String idioma;
     
     @NotEmpty
-    @Column(nullable = false, columnDefinition = "char(2)")
+    @Column(nullable = false, length = 2, columnDefinition = "char(2)")
     private String calidad;
     
     @NotNull
@@ -56,7 +55,7 @@ public class Proyeccion implements Serializable {
     
     /* Union PROYECCION TO RESERVA_BUTACA */
     @OneToMany(mappedBy = "proyeccion")
-    private Set<ReservaButaca> itemsReservaButaca = new HashSet<ReservaButaca>();
+    private Collection<ReservaButaca> itemsReservaButaca = new ArrayList<ReservaButaca>();
     
     /* Union PELICULA TO PROYECCION */
     @NotNull
@@ -140,11 +139,11 @@ public class Proyeccion implements Serializable {
 		this.updated_at = updated_at;
 	}
 
-	public Set<ReservaButaca> getItemsReservaButaca() {
+	public Collection<ReservaButaca> getItemsReservaButaca() {
 		return itemsReservaButaca;
 	}
 
-	public void setItemsReservaButaca(Set<ReservaButaca> itemsReservaButaca) {
+	public void setItemsReservaButaca(Collection<ReservaButaca> itemsReservaButaca) {
 		this.itemsReservaButaca = itemsReservaButaca;
 	}
 

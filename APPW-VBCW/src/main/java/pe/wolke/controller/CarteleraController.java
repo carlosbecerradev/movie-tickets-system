@@ -41,13 +41,11 @@ public class CarteleraController {
 		model.addAttribute("Peliculas", peliculaService.findAllAvilable());	
 		model.addAttribute("Tarifas", tarifaService.findAll());
 		
-		if (id_pelicula != null && id_pelicula > 0) {		
-			// Listar pelicula seleccionada
-			// Se crea una lista para añadir la pelicula ya que el foreach solo acepta listas y no un solo objeto
+		if (id_pelicula != null && id_pelicula > 0 && peliculaService.isExist(id_pelicula)) {		
+			
+			// Buscando pelicula seleccionada y mandando sus proyecciones
 			Pelicula pelicula = peliculaService.findById(id_pelicula);
-			Collection<Pelicula> peli = new ArrayList<Pelicula>();
-			peli.add(pelicula);
-			model.addAttribute("pelicula", peli);
+			model.addAttribute("pelicula", pelicula);
 			// Listar proyecciones de pelicula seleccionada
 			
 			// Proyecciones de Hoy

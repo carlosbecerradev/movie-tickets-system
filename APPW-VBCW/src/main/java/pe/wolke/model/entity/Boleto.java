@@ -1,34 +1,42 @@
 package pe.wolke.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "boletos")
 public class Boleto implements Serializable {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @Column(nullable = false)
+    @NotNull
     private Date fecha;
+    
+    @NotNull
     @Column(nullable = false, columnDefinition = "decimal(7,2)")
     private Double monto_final;
     
     /* Union BOLETO TO DETALLE_BOLETO */
     @OneToMany(mappedBy = "boleto")
-    private Set<DetalleBoleto> itemsDetalleBoleto = new HashSet<DetalleBoleto>();
+    private Collection<DetalleBoleto> itemsDetalleBoleto = new ArrayList<DetalleBoleto>();
     
     /* Union BOLETO TO RESERVA_BUTACA **/
     @OneToMany(mappedBy = "boleto")
-    private Set<ReservaButaca> itemsReservaButaca = new HashSet<ReservaButaca>();
+    private Collection<ReservaButaca> itemsReservaButaca = new ArrayList<ReservaButaca>();
     
     /* Union CLIENTE TO BOLETO ***/
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cliente", nullable = false, foreignKey = @ForeignKey(
     		foreignKeyDefinition = "foreign key (id_cliente) references clientes(id)"))
@@ -62,19 +70,19 @@ public class Boleto implements Serializable {
 		this.monto_final = monto_final;
 	}
 
-	public Set<DetalleBoleto> getItemsDetalleBoleto() {
+	public Collection<DetalleBoleto> getItemsDetalleBoleto() {
 		return itemsDetalleBoleto;
 	}
 
-	public void setItemsDetalleBoleto(Set<DetalleBoleto> itemsDetalleBoleto) {
+	public void setItemsDetalleBoleto(Collection<DetalleBoleto> itemsDetalleBoleto) {
 		this.itemsDetalleBoleto = itemsDetalleBoleto;
 	}
 
-	public Set<ReservaButaca> getItemsReservaButaca() {
+	public Collection<ReservaButaca> getItemsReservaButaca() {
 		return itemsReservaButaca;
 	}
 
-	public void setItemsReservaButaca(Set<ReservaButaca> itemsReservaButaca) {
+	public void setItemsReservaButaca(Collection<ReservaButaca> itemsReservaButaca) {
 		this.itemsReservaButaca = itemsReservaButaca;
 	}
 
@@ -85,5 +93,14 @@ public class Boleto implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
+	public Proyeccion getProyeccion() {
+		Proyeccion proyeccion = new Proyeccion();
+		for(ReservaButaca rb: getItemsReservaButaca()){
+			proyeccion = rb.getProyeccion();
+		}
+		return proyeccion;
+	}
+	
         
 }

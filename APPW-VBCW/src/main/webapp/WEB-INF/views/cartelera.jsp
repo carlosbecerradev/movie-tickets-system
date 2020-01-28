@@ -46,6 +46,11 @@
             </div>
         </div>
     </nav>
+    
+    <!-- Mensajes -->
+	    <c:if test="${success != null}">
+	    	<div class="alert alert-success text-center">${success}</div>
+	    </c:if>
 
     <main class="main-wrapper container">
         <div class="main-title mt-5">
@@ -68,66 +73,66 @@
             </div>
         </div>
         
-        <!-- Detalle de peliculas y sus proyecciones -->
-        <div class="pelicula my-5 bg-blanco-border">
-            <div class="container-fluid">
-            <c:forEach var="card" items="${pelicula}">
-                <div class="row">
-                	
-                    <div class="col-12 col-md-4">
-                        <div class="pelicula-img py-4">                        	
-                            <img src="${card.imagenUri}" alt="" width="100%">
-                        </div>
-                    </div>
-                    <!-- col -->
-                    <div class="col-12 col-md-8">
-                        <div class="pelicula-content my-3">                        
-                            <h2 class="pelicula-title">${card.titulo}</h2>
-                            <h3 class=" mt-4">Sinopsis</h3>
-                            <p class="pelicula-descripcion mb-3">
-                                ${card.descripcion}
-                            </p>
-                            <h3 class="pelicula-genero">Género:
-                                <span class="text ml-3 mt-4">${card.genero}</span>
-                            </h3>
-                            <h3 class="pelicula-censura">Censura:
-                                <span class="text ml-3 mt-4">${card.censura}</span>
-                            </h3>
-                            <h3 class="pelicula-censura">Duración:
-                                <span class="text ml-3 mt-4">${card.duracion} min</span>
-                            </h3>
-                            <h3 class="pelicula-horarios">Horarios:</h3>
-                            <div class="horarios">
-	                             <details class="horarios-details" open>
-			                         <summary>HOY</summary>
-		                             <div class="horario my-2">
-                            			<c:forEach var="proy" items="${ProyeccionesHoy}">
-		                                   <a href='<c:url value="/compra_boleto?id=${proy.id}" />' class="btn btn-principal">${proy.hora}</a>		                                         
-	                            	 	</c:forEach>
-		                             </div>      
-	                             </details>    
-	                             <details class="horarios-details" open>
-			                         <summary>MAÑANA</summary>
-		                             <div class="horario my-2">
-                            			<c:forEach var="proy" items="${ProyeccionesManiana}">
-		                                   <a href='<c:url value="/compra_boleto?id=${proy.id}" />' class="btn btn-principal">${proy.hora}</a>		                                         
-	                            	 	</c:forEach>
-		                             </div>      
-	                             </details> 
-                            </div>
-
-                        </div>
-                        
-                    </div>
-                 <!-- col -->
-               		
-                </div>
-                <!-- row -->
-             </c:forEach>             
-             
-            </div>
-        </div>
-        
+        <c:if test="${pelicula != null}">
+	        <!-- Detalle de peliculas y sus proyecciones -->
+	        <div class="pelicula my-5 bg-blanco-border">
+	            <div class="container-fluid">
+	            
+	                <div class="row">
+	                	
+	                    <div class="col-12 col-md-4">
+	                        <div class="pelicula-img py-4">                        	
+	                            <img src="${pelicula.imagenUri}" alt="" width="100%">
+	                        </div>
+	                    </div>
+	                    <!-- col -->
+	                    <div class="col-12 col-md-8">
+	                        <div class="pelicula-content my-3">                        
+	                            <h2 class="pelicula-title">${pelicula.titulo}</h2>
+	                            <h3 class=" mt-4">Sinopsis</h3>
+	                            <p class="pelicula-descripcion mb-3">
+	                                ${pelicula.descripcion}
+	                            </p>
+	                            <h3 class="pelicula-genero">Género:
+	                                <span class="text ml-3 mt-4">${pelicula.genero.nombre}</span>
+	                            </h3>
+	                            <h3 class="pelicula-censura">Censura:
+	                                <span class="text ml-3 mt-4">${pelicula.censura}</span>
+	                            </h3>
+	                            <h3 class="pelicula-censura">Duración:
+	                                <span class="text ml-3 mt-4">${pelicula.duracion} min</span>
+	                            </h3>
+	                            <h3 class="pelicula-horarios">Horarios:</h3>
+	                            <div class="horarios">
+		                             <details class="horarios-details" open>
+				                         <summary>HOY</summary>
+			                             <div class="horario my-2">
+	                            			<c:forEach var="proy" items="${ProyeccionesHoy}">
+			                                   <a href='<c:url value="/compra_boleto?id=${proy.id}" />' class="btn btn-principal">${proy.hora}</a>		                                         
+		                            	 	</c:forEach>
+			                             </div>      
+		                             </details>    
+		                             <details class="horarios-details" open>
+				                         <summary>MAÑANA</summary>
+			                             <div class="horario my-2">
+	                            			<c:forEach var="proy" items="${ProyeccionesManiana}">
+			                                   <a href='<c:url value="/compra_boleto?id=${proy.id}" />' class="btn btn-principal">${proy.hora}</a>		                                         
+		                            	 	</c:forEach>
+			                             </div>      
+		                             </details> 
+	                            </div>
+	
+	                        </div>
+	                        
+	                    </div>
+	                 <!-- col -->
+	               		
+	                </div>
+	                <!-- row -->       
+	             
+	            </div>
+	        </div>
+        </c:if>
         <hr>
         
         <!-- Tarifa  -->

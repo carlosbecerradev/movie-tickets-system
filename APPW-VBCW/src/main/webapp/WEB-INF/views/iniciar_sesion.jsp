@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+    <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Component of cine app aplication!</title>
+    <title>Ingresar al sistema!</title>
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/encabezados.css">
     <link rel="stylesheet" href="css/navegacion.css">
@@ -26,7 +25,7 @@ rel="stylesheet">
         <div class="container h-100 d-flex justify-content-between align-items-center">
             <a class="navbar-brand" href='<c:url value="/cartelera" />'>
                 <div class="brand">
-                    <img class="brand-img" src="cine-wolke.svg" alt="">
+                    <img class="brand-img" src="img/cine-wolke.svg" alt="">
                     <span class="brand-text ml-2">cine wolke</span>
                 </div>
             </a>
@@ -44,23 +43,72 @@ rel="stylesheet">
         </div>
     </nav>
 
+				<!-- Mensajes -->
+	            <c:if test="${param.logout != null}">
+	                <div class="alert alert-success text-center">
+	                    Usted ha cerrado sesión!
+	                </div>
+	            </c:if>
+	            
+	            <!-- si existe error de logeo -->
+	            <c:if test="${param.error != null}">
+	                <div class="alert alert-danger text-center">
+	                    Usuario y/o contraseña erróneos, intente nuevamente.
+	                </div>
+	            </c:if>
+	            
+	            <c:if test="${param.accesso_denegado != null}">
+	                <div class="alert alert-info text-center">
+	                    No tiene permiso para ingresar a esta página.
+	                </div>
+	            </c:if>
+	            
+	            <sec:authorize access="isAuthenticated()">
+		            <sec:authentication var="username" 
+		                                 property="principal.username"/>
+					<div class="alert alert-info text-center">
+	                    Hola <b>${username}</b>, usted ya inicio sesión 
+					
+						<sec:authorize access="hasRole('ROLE_ADMINISTRADOR')">
+						    <a class="text-light px-3 py-2 btn btn-success" href="<c:url value='/reportes'/>">Redirigir</a>
+						</sec:authorize>
+
+	                    <sec:authorize access="hasRole('ROLE_MARKETERO')">
+						    <a class="text-light px-3 py-2 btn btn-success" href="<c:url value='/gestion_peliculas'/>">Redirigir</a>
+						</sec:authorize>
+	                    
+	                </div>		 
+		        </sec:authorize>
+	     
+	            
     <div class="container ">
         <div class="row justify-content-center align-items center">
             <div class="col-12 col-md-10 col-lg-6 my-5 p-5 bg-blanco-border">
                 <h1 class="mb-4 text-center">Iniciar Sesión</h1>
-                <form:form  method="post" modelAttribute="usuario"  class="needs-validation">
+                <form  method="post" class="needs-validation" action="/wolke/login">
+                
+                <!-- token de seguridad -->
+	            <input type="hidden"
+	                   name="${_csrf.parameterName}"
+	                   value="${_csrf.token}"/>            
+	            
+               		 
                     <div class="form-group">
-                        <label for="exampleInputUsr1">Nombre de usuario</label>
-                        <form:input path="username" type="text" class="form-control" id="exampleInputUsr1" placeholder="usuario" />
+                        <label>Nombre de usuario</label>
+                        <input name="username" type="text" class="form-control"  placeholder="ingrese su usuario" />                        
                     </div>
+                    
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Contraseña</label>
-                        <form:input path="contrasenia" type="password" class="form-control" id="exampleInputPassword1" placeholder="contraseña" />
-                        <small id="emailHelp" class="form-text text-muted">Si no recuerdas tu contraseña, consulta con
+                        <label>Contraseña</label>
+                        <input name="contrasenia" type="password" class="form-control"  placeholder="ingrese su contraseña" />
+                        
+                        <small class="form-text text-muted">Si no recuerdas tu contraseña, consultar con
                             Soporte Técnico.</small>
                     </div>
+                    
                     <button type="submit" class="btn btn-block btn-principal">Ingresar</button>
-                </form:form>
+                </form>
+                
             </div>
         </div>
     </div>

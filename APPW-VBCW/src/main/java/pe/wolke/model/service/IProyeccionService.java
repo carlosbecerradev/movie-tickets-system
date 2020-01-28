@@ -16,7 +16,8 @@ public interface IProyeccionService {
 	public abstract boolean isExist(Integer id_proyeccion);
 	
 	/**/
-	
+	public abstract void insertReservasButacas(Proyeccion proyeccion);
+	/**/
 	public abstract Collection<Proyeccion> filterProyeccionByDate(String fecha, Collection<Proyeccion> lstProyecciones);
 	public abstract Collection<Proyeccion> findAllByToday(Collection<Proyeccion> lstProyecciones);
 	public abstract Collection<Proyeccion> findAllByTomorrow(Collection<Proyeccion> lstProyecciones);

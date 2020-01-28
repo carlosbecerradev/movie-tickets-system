@@ -15,18 +15,18 @@
     <title>Gestionar Tarifas - Cine Wolke</title>
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/encabezados.css">
-    <link rel="stylesheet" href="css/navegacion.css">
     <link rel="stylesheet" href="css/tabla.css">
+    <link rel="stylesheet" href="css/navegacion.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700|Roboto:400,500&display=swap"
 rel="stylesheet">
 </head>
 <body>
 
 	 <nav class="navbar navbar-expand-md navbar-light bg-blanco">
-	        <div class="container h-100 d-flex justify-content-between align-items-center">
+        <div class="container h-100 d-flex justify-content-between align-items-center">
 	            <a class="navbar-brand" href='<c:url value="/cartelera" />'>
 	                <div class="brand">
-	                    <img class="brand-img" src="cine-wolke.svg" alt="">
+	                    <img class="brand-img" src="img/cine-wolke.svg" alt="">
 	                    <span class="brand-text ml-2">cine wolke</span>
 	                </div>
 	            </a>
@@ -36,6 +36,7 @@ rel="stylesheet">
 	            </button>
 	            <div class="collapse navbar-collapse bg-blanco" id="navbarNav">
 	                <ul class="navbar-nav bg-blanco ml-md-auto text-center p-3 p-md-0">
+	                
 	                    <li class="nav-item">
 	                        <a class="nav-link" href='<c:url value="/reportes" />'>Reportes</a>
 	                    </li>
@@ -47,8 +48,10 @@ rel="stylesheet">
 	                    </li>
 	                    <li class="nav-item ">
 	                        <a class="nav-link " href='<c:url value="/gestion_butacas" />'>Butacas</a>
-	                    </li>
-	                    <a class="nav-link btn-inverso rounded ml-md-4" href="#">Cerrar Sesión</a>
+	                    </li>	                    
+	                    <a class="nav-link btn-inverso rounded ml-md-4" href='<c:url value="/logout"/>'>
+	                    	Cerrar Sesión
+	                    </a>
 	                </ul>
 	            </div>
 	        </div>
@@ -91,7 +94,7 @@ rel="stylesheet">
 	                            
 	                            <div class="col-md-6 mb-3">
 	                                <label>Tipo de Cliente</label>
-	                                <form:input path="tipo_cliente" type="text" class="form-control"
+	                                <form:input path="tipo_cliente" type="text" class="form-control"  maxlength="20" 
 	                                    placeholder="Tipo de cliente"/>
 	                                <form:errors path="tipo_cliente" cssClass="form-text text-danger" />
 	                            </div>
@@ -108,8 +111,8 @@ rel="stylesheet">
 	            
 	                            <div class="col-md-6 mb-3">
 	                                <label>Precio</label>
-	                                <form:input path="precio" type="text" class="form-control" 
-	                                placeholder="00.00"/>
+	                                <form:input path="precio" type="text" class="form-control" pattern="^\d{1,3}(\.\d{0,2})?$"  
+	                                placeholder="00.00" maxlength="6" />
 	                                <form:errors path="precio" cssClass="form-text text-danger" />
 	                            </div>
 	                            <div class="col-md-6 offset-6">
@@ -155,5 +158,17 @@ rel="stylesheet">
 	            </div>
 	        </div>
 	</div>
+	
+	<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+crossorigin="anonymous"></script>
 </body>
 </html>

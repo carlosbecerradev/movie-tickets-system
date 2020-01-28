@@ -80,11 +80,15 @@ public class ProyeccionController {
 	@RequestMapping(value = "/eliminar_proyeccion/{id}")
 	public String eliminar_proyecciones(@PathVariable(value="id") Integer id_proyeccion, RedirectAttributes flash) {
 		
-		if (id_proyeccion != null && id_proyeccion > 0) {
+		if (id_proyeccion != null && id_proyeccion > 0 
+				&& proyeccionService.findById(id_proyeccion).getItemsReservaButaca().size() == 0) 
+		{
 			proyeccionService.delete(id_proyeccion);
 			flash.addFlashAttribute("success", "Proyeccion Eliminada con exito");
-		} else {
-			flash.addFlashAttribute("error", "El id no exite");
+		}
+		else 
+		{
+			flash.addFlashAttribute("error", "El id no exite o esta proyeccion está siendo usada");
 		}
 		
 		return "redirect:/gestion_proyecciones";

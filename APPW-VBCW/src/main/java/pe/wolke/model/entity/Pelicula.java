@@ -10,10 +10,12 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "peliculas")
 public class Pelicula implements Serializable {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -27,16 +29,12 @@ public class Pelicula implements Serializable {
     private String descripcion;
 
     @NotEmpty
-    @Column(nullable = true, length = 255)
+    @Column(name = "imagen_uri",nullable = true, length = 255)
     private String imagenUri;
 
     @NotEmpty
-    @Column(nullable = true, columnDefinition = "char(4)")
+    @Column(nullable = true, length = 4, columnDefinition = "char(4)")
     private String censura;
-
-    @NotEmpty
-    @Column(nullable = true, length = 15)
-    private String genero;
 
     @NotEmpty
     @Column(nullable = true, columnDefinition = "char(3)") 
@@ -44,8 +42,7 @@ public class Pelicula implements Serializable {
     
     @NotNull
     @Column(nullable = false, columnDefinition = "bit default 1")
-    private Boolean estado;  
-    
+    private Boolean estado;
     
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -56,6 +53,13 @@ public class Pelicula implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = true, columnDefinition = "timestamp")
     private Date updated_at;
+    
+    /* Relacion PELICULA TO GENERO */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_genero", nullable = false, 
+    			foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_genero) references generos(id)"))
+    @NotNull
+    private Genero genero;
     
     /* Union PELICULA TO PROYECCION */
     @OneToMany(mappedBy = "pelicula", fetch = FetchType.EAGER)    
@@ -105,13 +109,6 @@ public class Pelicula implements Serializable {
 		this.censura = censura;
 	}
 
-	public String getGenero() {
-		return genero;
-	}
-
-	public void setGenero(String genero) {
-		this.genero = genero;
-	}
 
 	public String getDuracion() {
 		return duracion;
@@ -143,6 +140,14 @@ public class Pelicula implements Serializable {
 
 	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
+	}
+
+	public Genero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(Genero genero) {
+		this.genero = genero;
 	}
 
 	public Collection<Proyeccion> getItemsProyeccion() {

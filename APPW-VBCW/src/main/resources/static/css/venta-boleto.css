@@ -1,32 +1,37 @@
-
-.grid-sala {
-    display: grid;
-    justify-content: center;
-    grid-gap: 4px;
-    overflow: hidden;
+.seleccion-butacas {
 }
-.grid-sala-row {
-    display: flex;
-    flex-direction: row;
+.grid-sala {
+    overflow: auto;
+}
+.block-butacas {
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+    width: calc(16*42px);
 }
 .grid-sala-colunm {
     height: 30px;
     width: 30px;
     border-radius: 10px;
     margin: 4px;
-    color: var(--color-blanco);
     font-size: 12px;
     background-color: var(--color-blanco);
     border: 1px solid var(--color-principal);
+    display: inline-block;
 }
 .grid-sala-colunm.active {
     background: linear-gradient(45deg, var(--color-auxiliar), var(--color-principal));
 }
-.col-group {
-    padding-left: 8px;
-    padding-right: 8px;
-    display: flex;
-    flex-direction: row;
+#butaca input {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+}
+
+#reservado {
+    height: 100%;
+    width: 100%;
+    visibility: hidden;
 }
 .pantalla {
     justify-self: center;

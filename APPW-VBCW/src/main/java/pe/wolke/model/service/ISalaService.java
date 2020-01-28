@@ -12,4 +12,7 @@ public interface ISalaService {
 	public abstract Sala findById(Integer id_sala);
 	public abstract Collection<Sala> findAll();
 	public abstract boolean isExist(Integer id_sala);
+	
+
+	public abstract void insertButacas(Sala sala);
 }

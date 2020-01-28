@@ -62,9 +62,9 @@
 		<dependency>
 		    <groupId>org.apache.tomcat.embed</groupId>
 		    <artifactId>tomcat-embed-jasper</artifactId>
-		</dependency>		
-		
-		<!-- Security
+		</dependency>
+        
+		<!-- Security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -74,7 +74,20 @@
 	        <groupId>org.springframework.security</groupId>
 	        <artifactId>spring-security-taglibs</artifactId>
 	    </dependency>
-		 -->
+	    
+	    <!-- Excel Apache POI -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>3.17</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>3.17</version>
+		</dependency>
+		 
 	</dependencies>
 		
 

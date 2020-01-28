@@ -1,5 +1,8 @@
 package pe.wolke.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +32,19 @@ public class ButacaController {
 	@Autowired
 	@Qualifier("salaServiceImpl")
 	private ISalaService salaService;
-
+	
+	
 	/* Listar */
 	@RequestMapping(value = "/gestion_butacas", method = RequestMethod.GET)
 	public String butacas_GET(Model model, @RequestParam(required = false) Integer id) {
 		
 		model.addAttribute("Butacas", butacaService.findAll());
 		model.addAttribute("Salas", salaService.findAll());
+		
+		String [] lstFilas = {"A","B","C","D","E","F","G"};
+		String [] lstColumnas = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"};
+		model.addAttribute("lstFilas", lstFilas);
+		model.addAttribute("lstColumnas", lstColumnas);
 		
 		Butaca butaca = new Butaca();
 		
@@ -57,6 +66,12 @@ public class ButacaController {
 		if(result.hasErrors()) {
 			model.addAttribute("Butacas", butacaService.findAll());
 			model.addAttribute("Salas", salaService.findAll());
+
+			String [] lstFilas = {"A","B","C","D","E","F","G"};
+			String [] lstColumnas = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"};
+			model.addAttribute("lstFilas", lstFilas);
+			model.addAttribute("lstColumnas", lstColumnas);
+			
 			return "gestion_butacas";
 		}							
 		
@@ -75,13 +90,15 @@ public class ButacaController {
 	@RequestMapping(value = "/eliminar_butaca/{id}")
 	public String eliminar_butacas(@PathVariable(value="id") Integer id_butaca, RedirectAttributes flash) {
 		
-		if (id_butaca != null && id_butaca > 0) 
+		if (id_butaca != null && id_butaca > 0 
+				&& butacaService.findById(id_butaca).getItemsReservaButaca().size() == 0) 
 		{
 			butacaService.delete(id_butaca);
 			flash.addFlashAttribute("success", "Butaca Eliminada con exito");
-		} else 
+		} 
+		else 
 		{
-			flash.addFlashAttribute("error", "El id no exite");
+			flash.addFlashAttribute("error", "El id no exite o esta butaca está siendo usada");
 		}
 		
 		return "redirect:/gestion_butacas";
