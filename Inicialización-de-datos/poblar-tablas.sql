@@ -28,6 +28,3 @@ insert into generos(nombre) values ('Acción');
 -- select * from boletos;
 -- select * from clientes;
 -- select * from detalle_boleto;
-
-select * from boletos b where b.fecha = '2020-01-26';
-

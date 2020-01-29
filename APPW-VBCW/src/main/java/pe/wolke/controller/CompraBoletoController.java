@@ -30,6 +30,7 @@ import pe.wolke.model.service.IDetalleBoletoService;
 import pe.wolke.model.service.IProyeccionService;
 import pe.wolke.model.service.IReservaButacaService;
 import pe.wolke.model.service.ITarifaService;
+import pe.wolke.model.service.SendMailService;
 
 @Controller
 public class CompraBoletoController {
@@ -162,6 +163,9 @@ public class CompraBoletoController {
 		return "pagar_boleto";
 	}
 	
+	@Autowired
+	private SendMailService sendMailService;
+		
 	@RequestMapping(value = "/pagar_boleto", method = RequestMethod.POST)
 	public String pagar_boleto_POST(RedirectAttributes flash) {
 		
@@ -182,10 +186,23 @@ public class CompraBoletoController {
 			detalleBoletoService.insert(dt);
 		}
 		
+		String correoEmpresa = "cinewolke.app@gmail.com";
+		String cooreoCliente = this.cliente.getCorreo();
+		String asunto = "CineWolke - Compra de Boleto";
+		String mensaje = sendMailService.generarMensaje(this.boleto);
+		
+		/* Enviar mensaje a correo electrónico */
+		sendMailService.sendMail(
+				correoEmpresa, 
+				cooreoCliente, 
+				asunto, 
+				mensaje);
+		
 		this.cliente = null;
 		this.boleto = null;
 		this.proyeccion = null;
 		flash.addFlashAttribute("success", "Boleto comprado con exito");
+		
 		return "redirect:/cartelera";
 	}
 	
@@ -196,6 +213,7 @@ public class CompraBoletoController {
 		this.proyeccion = null;
 		return "redirect:/cartelera";
 	}
+	
 	
 
 }
