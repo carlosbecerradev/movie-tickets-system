@@ -41,5 +41,3 @@ Pasos para ejecutar correctamente este proyecto.
     - "admin" y "123".
 13. Consultar boletos comprados y generar archivo Excel.
  
-## Créditos
-* [@cbherit](https://github.com/cbherit) - Carlos Becerra
